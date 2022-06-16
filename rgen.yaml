@@ -1,3 +1,6 @@
+out_put:
+  path: "./output"
+  
 # 实体数据源
 entity_source:
   # type: mysql
