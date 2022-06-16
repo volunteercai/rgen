@@ -1,13 +1,9 @@
 # 实体数据源
 entity_source:
   # type: mysql
-  # host: 127.0.0.1
-  # port: 3306
-  # user_name: root
-  # password: 123456
-  # db: test
+  # url: "mysql://root@123456:127.0.0.1:3306/test"
   type: rge # default
-  path: ./entities.rge # default
+  url: ./entities.rge # default
 
 # 全局参数
 context:
