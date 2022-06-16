@@ -1,0 +1,13 @@
+entity User {
+	name String,
+	password String,
+	city String,
+	stateProvince String
+}
+
+entity Image {
+	name String,
+	password String,
+	city String,
+	stateProvince String
+}
