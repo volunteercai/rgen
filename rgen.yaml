@@ -1,11 +1,11 @@
-out_put:
-  path: "./output"
+out_put: "./output"
+templates: "./templates"
   
 # 实体数据源
 entity_source:
-  # type: mysql
+  # type_: mysql
   # url: "mysql://root@123456:127.0.0.1:3306/test"
-  type: rge # default
+  type_: rge # default
   url: ./entities.rge # default
 
 # 全局参数
