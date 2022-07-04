@@ -1,5 +1,19 @@
-use std::{fs::{self, File}, path, io::Write};
+use std::{fs::{self, File}, path, io::Write, collections::HashMap};
 use tera::{Tera, Context};
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct Conf {
+	out_put: Option<String>,
+	templates: Option<String>,
+	entity_source: EntitySource,
+	context: HashMap<String, String>,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct EntitySource {
+	type_: Option<String>,
+	url: Option<String>,
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Entity {
@@ -59,3 +73,5 @@ pub fn gen(from: &str, to: &str, tera: &mut Tera, context: &mut Context, entitys
 		}
 	});
 }
+
+mod entity_source;
