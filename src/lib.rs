@@ -22,6 +22,41 @@ pub struct Entity {
 	pub fileds: Vec<EntityFiled>,
 }
 
+impl Entity {
+	pub fn new(entity_body: String) -> Self {
+		let mut name = "";
+		let mut fileds = Vec::new();
+		let lines = entity_body.split("\n");
+		for (i, line) in lines.enumerate() {
+			let line = line.trim();
+			if i == 0 {
+				// 截取entity名称
+				name = line.split(" ").nth(1).unwrap();
+				continue;
+			}
+			if i > 0 {
+				let filed_name = line.split(" ").nth(0).unwrap();
+				let mut filed_type = line.split(" ").nth(1).unwrap();
+				if filed_type.ends_with(",") {
+						filed_type = &filed_type[..filed_type.len()-1];
+				}
+				// println!("filed_name: {} filed_type: {}", filed_name, filed_type);
+				fileds.push(EntityFiled { 
+					name: filed_name.to_string(), 
+					type_: EntityFiledType::new(filed_type), 
+					is_required: false 
+				});	
+			}
+		}
+		Entity {
+			name: name.to_string(),
+			low_case_name: name.to_string().to_lowercase(),
+			fileds,
+		}
+	}	
+	
+}
+
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct EntityFiled {
 	pub name: String,
@@ -40,6 +75,23 @@ pub enum EntityFiledType {
 	ZonedDateTime,
 	Enum,
 	Entity,
+}
+
+impl EntityFiledType {
+	pub fn new(type_: &str) -> Self {
+		// 匹配枚举
+		match type_ {
+			"String" => EntityFiledType::String,
+			"Integer" => EntityFiledType::Integer,
+			"Long" => EntityFiledType::Long,
+			"BigDecimal" => EntityFiledType::BigDecimal,
+			"Boolean" => EntityFiledType::Boolean,
+			"LocalDateTime" => EntityFiledType::LocalDateTime,
+			"ZonedDateTime" => EntityFiledType::ZonedDateTime,
+			_ => panic!("不支持的类型 {}", type_),
+		}
+
+	}	
 }
 
 pub fn gen(from: &str, to: &str, tera: &mut Tera, context: &mut Context, entitys : &[&Entity]) {
