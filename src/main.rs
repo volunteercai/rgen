@@ -32,15 +32,6 @@ fn main() {
 	gen(conf.templates.unwrap().as_str(), conf.out_put.unwrap().as_str(), &mut tera, &mut context, &entities);
 }
 
-#[test]
-fn test_parse_reg() {
-	let reg = fs::read_to_string("entities.rge").unwrap();
-	print!("{}", reg);
-	// 解析.rge为entities
-	let entities = parse_reg(&reg);
-	println!("{:?}", entities);
-}
-
 fn parse_reg(f: &str) -> Vec<Entity> {
 	let mut entities = Vec::new();
 	let lines = f.split("}");
