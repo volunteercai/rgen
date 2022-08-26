@@ -1,4 +1,4 @@
-package {{packageName}}.entity;
+package {{package_name}}.entity;
 
 public class {{entity.name}} {
 

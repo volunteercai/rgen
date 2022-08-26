@@ -1,7 +1,7 @@
-package {{packageName}}.web;
+package {{package_name}}.web;
 
-import {{packageName}}.service.{{entity.name}}Service;
-import {{packageName}}.entity.{{entity.name}};
+import {{package_name}}.service.{{entity.name}}Service;
+import {{package_name}}.entity.{{entity.name}};
 
 @RestController
 @RequestMapping("/{{entity.name}}")

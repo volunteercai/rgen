@@ -14,12 +14,22 @@ fn main() {
 	// 校验内容
 	
 	// 获取命令行参数
-	let args = env::args().collect::<Vec<_>>();
+	// let args = env::args().collect::<Vec<_>>();
 	// 校验命令行参数
 
-	// 解析.rg为entities
+	let reg = fs::read_to_string(conf.entity_source.url.unwrap()).unwrap();
 	
+	// 解析.rge为entities
+	let entities = parse_reg(&reg);
 	// 生成代码
+	let mut tera = Tera::default();
+	let mut context = Context::new();
+
+	for key in conf.context.keys() {
+		context.insert(key, &conf.context.get(key))
+	}
+
+	gen(conf.templates.unwrap().as_str(), conf.out_put.unwrap().as_str(), &mut tera, &mut context, &entities);
 }
 
 #[test]
@@ -44,16 +54,4 @@ fn parse_reg(f: &str) -> Vec<Entity> {
 		}
 	}
 	entities
-}
-
-#[test]
-fn test_filed() {
-	// let filed = EntityFiled {
-	// 	name: "name".to_string(),
-	// 	type_: EntityFiledType::new(Option::Some("String".to_string())),
-	// 	is_required: false,
-	// };
-	// println!("{:?}", filed);
-	let slice = &"Können"[..6];
-	println!("{}", slice);
 }
