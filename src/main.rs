@@ -28,8 +28,13 @@ fn main() {
 	for key in conf.context.keys() {
 		context.insert(key, &conf.context.get(key))
 	}
-
-	gen(conf.templates.unwrap().as_str(), conf.out_put.unwrap().as_str(), &mut tera, &mut context, &entities);
+	let out = conf.out_put.unwrap();
+	let path = std::path::Path::new(&out);
+	if path.exists() {
+		fs::remove_dir_all(path).unwrap();
+	}
+	fs::create_dir_all(path).unwrap();
+	gen(conf.templates.unwrap().as_str(), &out, &mut tera, &mut context, &entities);
 }
 
 fn parse_reg(f: &str) -> Vec<Entity> {
