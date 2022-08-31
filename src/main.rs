@@ -22,8 +22,8 @@ fn main() {
 	// 解析.rge为entities
 	let entities = parse_reg(&reg);
 	// 生成代码
-	let mut tera = Tera::default();
-	let mut context = Context::new();
+	let tera = &mut Tera::default();
+	let context = &mut Context::new();
 
 	for key in conf.context.keys() {
 		context.insert(key, &conf.context.get(key))
@@ -34,7 +34,7 @@ fn main() {
 		fs::remove_dir_all(path).unwrap();
 	}
 	fs::create_dir_all(path).unwrap();
-	gen(conf.templates.unwrap().as_str(), &out, &mut tera, &mut context, &entities);
+	gen(conf.templates.unwrap().as_str(), &out, tera, context, &entities);
 }
 
 fn parse_reg(f: &str) -> Vec<Entity> {
